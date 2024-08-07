@@ -8,13 +8,14 @@ What are we developing today?
 4. NodeJS
 5. PHP
 6. Python
-7. Rust"
+7. Rust
+8. Docker"
 
 read -p "Please enter the number of your choice: " choice
 read -p "Please enter the project name: " project_name
 
 if [ "$choice" -eq 1 ]; then
-    PROJECT_ROOT="$project_name"
+    PROJECT_ROOT="/dev/clutter/$project_name"
 
     # Create the directory structure
     mkdir -p $PROJECT_ROOT/{src,assets,tests}
@@ -174,7 +175,7 @@ EOL
     echo "Project directory structure created successfully!"
 
 elif [ "$choice" -eq 2 ]; then
-    PROJECT_ROOT="$project_name"
+    PROJECT_ROOT="/dev/dart/$project_name"
 
     # Create the directory structure
     mkdir -p $PROJECT_ROOT/{lib,bin,tests}
@@ -315,7 +316,7 @@ EOL
     echo "Project directory structure created successfully!"
 
 elif [ "$choice" -eq 3 ]; then
-    PROJECT_ROOT="$project_name"
+    PROJECT_ROOT="/dev/flutter/$project_name"
 
     # Create the directory structure
     mkdir -p $PROJECT_ROOT/{lib/{models,services,controllers,views,widgets},assets/{images,fonts},test}
@@ -516,7 +517,7 @@ EOL
     echo "Project directory structure created successfully!"
 
 elif [ "$choice" -eq 4 ]; then
-    PROJECT_ROOT="$project_name"
+    PROJECT_ROOT="/dev/nodejs/$project_name"
 
     # Create the directory structure
     mkdir -p $PROJECT_ROOT/{public/{css,js,images},src/{controllers,models,routes,views,middlewares,services,utils},tests}
@@ -679,7 +680,7 @@ EOL
     echo "Project directory structure created successfully!"
 
 elif [ "$choice" -eq 5 ]; then
-    PROJECT_ROOT="$project_name"
+    PROJECT_ROOT="/dev/php/$project_name"
 
     # Create the directory structure
     mkdir -p $PROJECT_ROOT/{public/{css,js,images},src/{controllers,models,routes,views,middlewares,services,utils},tests}
@@ -891,7 +892,7 @@ EOL
     echo "Project directory structure created successfully!"
 
 elif [ "$choice" -eq 6 ]; then
-    PROJECT_ROOT="$project_name"
+    PROJECT_ROOT="/dev/python/$project_name"
 
     # Create the directory structure
     mkdir -p $PROJECT_ROOT/{src/{controllers,models,routes,views,middlewares,services,utils},tests,public/{css,js,images}}
@@ -1088,7 +1089,7 @@ EOL
     echo "Project directory structure created successfully!"
 
 elif [ "$choice" -eq 7 ]; then
-    PROJECT_ROOT="$project_name"
+    PROJECT_ROOT="/dev/rust/$project_name"
 
     # Create the directory structure
     mkdir -p $PROJECT_ROOT/{src,tests}
@@ -1221,6 +1222,269 @@ EOL
 
     # Notify the user
     echo "Project directory structure created successfully!"
+
+elif [ "$choice" -eq 8 ]; then
+    PROJECT_ROOT="/dev/docker/$project_name"
+
+    # Create the directory structure
+    mkdir -p $PROJECT_ROOT/{src/{controllers,models,routes,views,middlewares,services,utils},tests,public/{css,js,images}}
+
+    # Create main files
+    touch $PROJECT_ROOT/{.env,.gitignore,Dockerfile,docker-compose.yml,requirements.txt,README.md,start.sh,install.sh}
+    touch $PROJECT_ROOT/src/app.py
+
+    # Sample content for .env file
+    cat <<EOL > $PROJECT_ROOT/.env
+FLASK_ENV=development
+DATABASE_URL=sqlite:///my-python-app.db
+EOL
+
+    # Sample content for .gitignore file
+    cat <<EOL > $PROJECT_ROOT/.gitignore
+__pycache__/
+.env
+*.pyc
+instance/
+venv/
+EOL
+
+    # Detailed content for README.md file
+    cat <<EOL > $PROJECT_ROOT/README.md
+# $project_name
+
+This is a Python project using Flask and Docker.
+
+## Directory Structure
+
+\`\`\`
+$project_name/
+├── public/
+│   ├── css/
+│   ├── js/
+│   ├── images/
+├── src/
+│   ├── controllers/
+│   ├── models/
+│   ├── routes/
+│   ├── views/
+│   ├── middlewares/
+│   ├── services/
+│   ├── utils/
+│   └── app.py
+├── tests/
+├── .env
+├── .gitignore
+├── Dockerfile
+├── docker-compose.yml
+├── requirements.txt
+├── start.sh
+├── install.sh
+└── README.md
+\`\`\`
+
+## Setup
+
+1. **Run the install script** to set up the virtual environment, install dependencies, and build the Docker image:
+    \`\`\`sh
+    ./install.sh
+    \`\`\`
+
+2. **Run the start script** to start the application using Docker Compose:
+    \`\`\`sh
+    ./start.sh
+    \`\`\`
+
+## Project Structure
+
+- **public/**: Static assets (CSS, JS, images).
+- **src/**: Source code.
+  - **controllers/**: Handles requests and responses.
+  - **models/**: Data structures and database interaction.
+  - **routes/**: Defines URL endpoints.
+  - **views/**: HTML templates (if using a templating engine).
+  - **middlewares/**: Middleware functions.
+  - **services/**: Business logic.
+  - **utils/**: Utility functions.
+  - **app.py**: Main application file.
+- **tests/**: Test files.
+
+## Environment Variables
+
+- **FLASK_ENV**: Flask environment (development, production).
+- **DATABASE_URL**: Database connection string.
+
+## Basic Commands
+
+- **Build the Docker image**:
+    \`\`\`sh
+    docker-compose build
+    \`\`\`
+- **Run the application**:
+    \`\`\`sh
+    docker-compose up
+    \`\`\`
+- **Run tests** (if set up):
+    \`\`\`sh
+    pytest
+    \`\`\`
+
+## Creating a New Route
+
+1. **Create a new route file in \`src/routes\`**.
+2. **Define the route and link it to a controller**.
+3. **Update \`src/app.py\` to use the new route**.
+
+## Adding a Controller
+
+1. **Create a new controller file in \`src/controllers\`**.
+2. **Define functions to handle requests**.
+3. **Link the controller to a route**.
+
+For more detailed instructions, refer to the [Flask documentation](https://flask.palletsprojects.com/).
+
+## Docker Commands
+
+- **Stop the application**:
+    \`\`\`sh
+    docker-compose down
+    \`\`\`
+- **Remove all stopped containers, networks, images, and optionally, volumes**:
+    \`\`\`sh
+    docker system prune
+    \`\`\`
+- **Access the running container's shell**:
+    \`\`\`sh
+    docker exec -it <container_id> /bin/bash
+    \`\`\`
+
+EOL
+
+    # Sample content for requirements.txt file
+    cat <<EOL > $PROJECT_ROOT/requirements.txt
+Flask
+python-dotenv
+EOL
+
+    # Sample content for src/app.py file
+    cat <<EOL > $PROJECT_ROOT/src/app.py
+from flask import Flask
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
+app = Flask(__name__)
+
+# Load environment variables
+app.config['ENV'] = os.getenv('FLASK_ENV')
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
+
+# Import routes
+from routes.main_routes import main_routes
+
+# Register routes
+app.register_blueprint(main_routes)
+
+if __name__ == '__main__':
+    app.run(debug=True)
+EOL
+
+    # Sample content for src/routes/main_routes.py file
+    mkdir -p $PROJECT_ROOT/src/routes
+    cat <<EOL > $PROJECT_ROOT/src/routes/main_routes.py
+from flask import Blueprint
+from controllers.main_controller import home
+
+main_routes = Blueprint('main_routes', __name__)
+
+@main_routes.route('/')
+def index():
+    return home()
+EOL
+
+    # Sample content for src/controllers/main_controller.py file
+    mkdir -p $PROJECT_ROOT/src/controllers
+    cat <<EOL > $PROJECT_ROOT/src/controllers/main_controller.py
+def home():
+    return "Welcome to my Python website!"
+EOL
+
+    # Sample content for Dockerfile
+    cat <<EOL > $PROJECT_ROOT/Dockerfile
+# Use an official Python runtime as a parent image
+FROM python:3.9-slim
+
+# Set the working directory in the container
+WORKDIR /app
+
+# Copy the current directory contents into the container at /app
+COPY . /app
+
+# Install any needed packages specified in requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Make port 5000 available to the world outside this container
+EXPOSE 5000
+
+# Define environment variable
+ENV FLASK_ENV=development
+
+# Run app.py when the container launches
+CMD ["flask", "run", "--host=0.0.0.0"]
+EOL
+
+    # Sample content for docker-compose.yml
+    cat <<EOL > $PROJECT_ROOT/docker-compose.yml
+version: '3.8'
+
+services:
+  web:
+    build: .
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/app
+    environment:
+      - FLASK_ENV=development
+      - DATABASE_URL=sqlite:///my-python-app.db
+EOL
+
+    # Create install.sh script
+    cat <<EOL > $PROJECT_ROOT/install.sh
+#!/bin/bash
+# Create a virtual environment
+python -m venv venv
+
+# Activate the virtual environment
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Build the Docker image
+docker-compose build
+
+echo "Dependencies installed and Docker image built."
+EOL
+
+    # Make install.sh executable
+    chmod +x $PROJECT_ROOT/install.sh
+
+    # Create start.sh script
+    cat <<EOL > $PROJECT_ROOT/start.sh
+#!/bin/bash
+# Activate the virtual environment
+source venv/bin/activate
+
+# Run the application using Docker Compose
+docker-compose up
+EOL
+
+    # Make start.sh executable
+    chmod +x $PROJECT_ROOT/start.sh
+
+    # Notify the user
+    echo "Project directory structure and Docker setup created successfully!"
 
 else
     echo "Option not yet implemented."
